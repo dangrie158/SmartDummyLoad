@@ -29697,7 +29697,7 @@ Source: www.kingbright.com</description>
 <part name="JP1" library="SparkFun-Connectors" deviceset="POWER_JACK" device="PTH" value="DC 12V IN"/>
 <part name="C1" library="rcl" deviceset="C-EU" device="C1206K" value="100n"/>
 <part name="C2" library="rcl" deviceset="C-EU" device="C1206K" value="100n"/>
-<part name="C3" library="rcl" deviceset="CPOL-EU" device="150CLZ-0810" value="24µ"/>
+<part name="C3" library="rcl" deviceset="CPOL-EU" device="175TMP-0808" value="100µ"/>
 <part name="GND2" library="supply1" deviceset="GND" device=""/>
 <part name="P+4" library="supply1" deviceset="VCC" device=""/>
 <part name="P+2" library="supply1" deviceset="VCC" device=""/>
