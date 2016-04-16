@@ -29903,6 +29903,8 @@ Various fiducial points for machine vision alignment.</description>
 <part name="FID1" library="SparkFun-Aesthetics" deviceset="FIDUCIAL" device="1X2" value="FIDUCIAL1X2"/>
 <part name="FID2" library="SparkFun-Aesthetics" deviceset="FIDUCIAL" device="1X2" value="FIDUCIAL1X2"/>
 <part name="FID3" library="SparkFun-Aesthetics" deviceset="FIDUCIAL" device="1X2" value="FIDUCIAL1X2"/>
+<part name="R21" library="rcl" deviceset="R-EU_" device="R1206" value="10k"/>
+<part name="R22" library="rcl" deviceset="R-EU_" device="R1206" value="10k"/>
 </parts>
 <sheets>
 <sheet>
@@ -30038,13 +30040,13 @@ Equip EITHER with 7805 OR LM2569</text>
 <instance part="H2" gate="G$1" x="-154.94" y="-88.9"/>
 <instance part="H3" gate="G$1" x="-144.78" y="-88.9"/>
 <instance part="H4" gate="G$1" x="-144.78" y="-96.52"/>
-<instance part="U4" gate="G$1" x="-25.4" y="-17.78" smashed="yes">
-<attribute name="VALUE" x="-35.56" y="-25.4" size="1.778" layer="96"/>
-<attribute name="NAME" x="-30.48" y="-15.24" size="1.778" layer="95"/>
+<instance part="U4" gate="G$1" x="-25.4" y="-15.24" smashed="yes">
+<attribute name="VALUE" x="-35.56" y="-22.86" size="1.778" layer="96"/>
+<attribute name="NAME" x="-30.48" y="-12.7" size="1.778" layer="95"/>
 </instance>
-<instance part="T1" gate="G$1" x="-33.02" y="-15.24" smashed="yes">
-<attribute name="NAME" x="-33.528" y="-11.938" size="1.778" layer="95"/>
-<attribute name="VALUE" x="-40.64" y="-17.78" size="1.778" layer="96"/>
+<instance part="T1" gate="G$1" x="-33.02" y="-12.7" smashed="yes">
+<attribute name="NAME" x="-33.528" y="-9.398" size="1.778" layer="95"/>
+<attribute name="VALUE" x="-40.64" y="-15.24" size="1.778" layer="96"/>
 </instance>
 <instance part="P+7" gate="1" x="-22.86" y="0"/>
 <instance part="GND8" gate="1" x="-40.64" y="-30.48"/>
@@ -30052,7 +30054,7 @@ Equip EITHER with 7805 OR LM2569</text>
 <attribute name="NAME" x="-28.4226" y="-2.54" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="-30.7086" y="-7.62" size="1.778" layer="96" rot="R90"/>
 </instance>
-<instance part="R6" gate="G$1" x="-38.1" y="-10.16" rot="R270"/>
+<instance part="R6" gate="G$1" x="-38.1" y="-7.62" rot="R270"/>
 <instance part="IC4" gate="U$1" x="-215.9" y="-63.5"/>
 <instance part="KK2" gate="G$1" x="-149.86" y="-50.8"/>
 <instance part="R7" gate="G$1" x="-246.38" y="-27.94" rot="R270"/>
@@ -30203,15 +30205,15 @@ Equip EITHER with 7805 OR LM2569</text>
 <attribute name="NAME" x="-61.4426" y="-2.54" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="-63.7286" y="-7.62" size="1.778" layer="96" rot="R90"/>
 </instance>
-<instance part="U9" gate="G$1" x="-58.42" y="-17.78" smashed="yes">
-<attribute name="VALUE" x="-68.58" y="-25.4" size="1.778" layer="96"/>
-<attribute name="NAME" x="-63.5" y="-15.24" size="1.778" layer="95"/>
+<instance part="U9" gate="G$1" x="-58.42" y="-15.24" smashed="yes">
+<attribute name="VALUE" x="-68.58" y="-22.86" size="1.778" layer="96"/>
+<attribute name="NAME" x="-63.5" y="-12.7" size="1.778" layer="95"/>
 </instance>
-<instance part="T2" gate="G$1" x="-66.04" y="-15.24" smashed="yes">
-<attribute name="NAME" x="-66.548" y="-11.938" size="1.778" layer="95"/>
-<attribute name="VALUE" x="-73.66" y="-17.78" size="1.778" layer="96"/>
+<instance part="T2" gate="G$1" x="-66.04" y="-12.7" smashed="yes">
+<attribute name="NAME" x="-66.548" y="-9.398" size="1.778" layer="95"/>
+<attribute name="VALUE" x="-73.66" y="-15.24" size="1.778" layer="96"/>
 </instance>
-<instance part="R19" gate="G$1" x="-71.12" y="-10.16" rot="R270"/>
+<instance part="R19" gate="G$1" x="-71.12" y="-7.62" rot="R270"/>
 <instance part="FAN2" gate="G$1" x="-73.66" y="0" smashed="yes">
 <attribute name="NAME" x="-74.93" y="-3.81" size="1.778" layer="95" rot="R90"/>
 <attribute name="TP_SIGNAL_NAME" x="-72.39" y="-1.27" size="1.778" layer="97"/>
@@ -30225,6 +30227,8 @@ Equip EITHER with 7805 OR LM2569</text>
 <instance part="FID1" gate="G$1" x="-154.94" y="-81.28"/>
 <instance part="FID2" gate="G$1" x="-144.78" y="-81.28"/>
 <instance part="FID3" gate="G$1" x="-149.86" y="-81.28"/>
+<instance part="R21" gate="G$1" x="-63.5" y="-22.86" rot="R270"/>
+<instance part="R22" gate="G$1" x="-30.48" y="-22.86" rot="R270"/>
 </instances>
 <busses>
 </busses>
@@ -30268,7 +30272,7 @@ Equip EITHER with 7805 OR LM2569</text>
 <wire x1="-22.86" y1="-5.08" x2="-22.86" y2="-2.54" width="0.1524" layer="91"/>
 <junction x="-22.86" y="-2.54"/>
 <pinref part="T1" gate="G$1" pin="C"/>
-<wire x1="-30.48" y1="-10.16" x2="-30.48" y2="-2.54" width="0.1524" layer="91"/>
+<wire x1="-30.48" y1="-7.62" x2="-30.48" y2="-2.54" width="0.1524" layer="91"/>
 <wire x1="-30.48" y1="-2.54" x2="-27.94" y2="-2.54" width="0.1524" layer="91"/>
 <junction x="-27.94" y="-2.54"/>
 </segment>
@@ -30280,7 +30284,7 @@ Equip EITHER with 7805 OR LM2569</text>
 <wire x1="-55.88" y1="-2.54" x2="-60.96" y2="-2.54" width="0.1524" layer="91"/>
 <junction x="-55.88" y="-2.54"/>
 <pinref part="T2" gate="G$1" pin="C"/>
-<wire x1="-63.5" y1="-10.16" x2="-63.5" y2="-2.54" width="0.1524" layer="91"/>
+<wire x1="-63.5" y1="-7.62" x2="-63.5" y2="-2.54" width="0.1524" layer="91"/>
 <wire x1="-63.5" y1="-2.54" x2="-60.96" y2="-2.54" width="0.1524" layer="91"/>
 <junction x="-60.96" y="-2.54"/>
 </segment>
@@ -30492,11 +30496,17 @@ Equip EITHER with 7805 OR LM2569</text>
 <pinref part="GND8" gate="1" pin="GND"/>
 <pinref part="U9" gate="G$1" pin="S"/>
 <wire x1="-40.64" y1="-27.94" x2="-55.88" y2="-27.94" width="0.1524" layer="91"/>
-<wire x1="-55.88" y1="-27.94" x2="-55.88" y2="-25.4" width="0.1524" layer="91"/>
+<wire x1="-55.88" y1="-27.94" x2="-55.88" y2="-22.86" width="0.1524" layer="91"/>
 <pinref part="U4" gate="G$1" pin="S"/>
-<wire x1="-40.64" y1="-27.94" x2="-22.86" y2="-27.94" width="0.1524" layer="91"/>
-<wire x1="-22.86" y1="-27.94" x2="-22.86" y2="-25.4" width="0.1524" layer="91"/>
+<wire x1="-40.64" y1="-27.94" x2="-30.48" y2="-27.94" width="0.1524" layer="91"/>
+<wire x1="-30.48" y1="-27.94" x2="-22.86" y2="-27.94" width="0.1524" layer="91"/>
+<wire x1="-22.86" y1="-27.94" x2="-22.86" y2="-22.86" width="0.1524" layer="91"/>
 <junction x="-40.64" y="-27.94"/>
+<pinref part="R21" gate="G$1" pin="2"/>
+<wire x1="-63.5" y1="-27.94" x2="-55.88" y2="-27.94" width="0.1524" layer="91"/>
+<junction x="-55.88" y="-27.94"/>
+<pinref part="R22" gate="G$1" pin="2"/>
+<junction x="-30.48" y="-27.94"/>
 </segment>
 <segment>
 <pinref part="U$10" gate="G$1" pin="IN-"/>
@@ -30740,12 +30750,14 @@ Equip EITHER with 7805 OR LM2569</text>
 <segment>
 <pinref part="T1" gate="G$1" pin="E"/>
 <pinref part="U4" gate="G$1" pin="G"/>
+<pinref part="R22" gate="G$1" pin="1"/>
+<pinref part="R22" gate="G$1" pin="1"/>
+<junction x="-30.48" y="-17.78"/>
 </segment>
 </net>
 <net name="N$5" class="0">
 <segment>
 <pinref part="U4" gate="G$1" pin="D"/>
-<wire x1="-22.86" y1="-10.16" x2="-22.86" y2="-7.62" width="0.1524" layer="91"/>
 <pinref part="D1" gate="G$1" pin="A"/>
 <wire x1="-22.86" y1="-7.62" x2="-27.94" y2="-7.62" width="0.1524" layer="91"/>
 <pinref part="FAN1_CONN" gate="G$1" pin="1"/>
@@ -30756,7 +30768,7 @@ Equip EITHER with 7805 OR LM2569</text>
 <segment>
 <pinref part="T1" gate="G$1" pin="B"/>
 <pinref part="R6" gate="G$1" pin="2"/>
-<wire x1="-38.1" y1="-15.24" x2="-35.56" y2="-15.24" width="0.1524" layer="91"/>
+<wire x1="-38.1" y1="-12.7" x2="-35.56" y2="-12.7" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$10" class="0">
@@ -31403,13 +31415,16 @@ Equip EITHER with 7805 OR LM2569</text>
 <segment>
 <pinref part="U9" gate="G$1" pin="G"/>
 <pinref part="T2" gate="G$1" pin="E"/>
+<pinref part="R21" gate="G$1" pin="1"/>
+<pinref part="R21" gate="G$1" pin="1"/>
+<junction x="-63.5" y="-17.78"/>
 </segment>
 </net>
 <net name="N$48" class="0">
 <segment>
 <pinref part="T2" gate="G$1" pin="B"/>
 <pinref part="R19" gate="G$1" pin="2"/>
-<wire x1="-68.58" y1="-15.24" x2="-71.12" y2="-15.24" width="0.1524" layer="91"/>
+<wire x1="-68.58" y1="-12.7" x2="-71.12" y2="-12.7" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$50" class="0">
@@ -31418,14 +31433,12 @@ Equip EITHER with 7805 OR LM2569</text>
 <pinref part="FAN2_CONN" gate="G$1" pin="1"/>
 <wire x1="-60.96" y1="-7.62" x2="-55.88" y2="-7.62" width="0.1524" layer="91"/>
 <pinref part="U9" gate="G$1" pin="D"/>
-<wire x1="-55.88" y1="-7.62" x2="-55.88" y2="-10.16" width="0.1524" layer="91"/>
 <junction x="-55.88" y="-7.62"/>
 </segment>
 </net>
 <net name="FAN2" class="0">
 <segment>
 <pinref part="R19" gate="G$1" pin="1"/>
-<wire x1="-71.12" y1="-5.08" x2="-71.12" y2="-2.54" width="0.1524" layer="91"/>
 <pinref part="FAN2" gate="G$1" pin="TP"/>
 <wire x1="-73.66" y1="-2.54" x2="-71.12" y2="-2.54" width="0.1524" layer="91"/>
 <label x="-71.12" y="-2.54" size="1.524" layer="95" rot="R90" xref="yes"/>
@@ -31439,7 +31452,6 @@ Equip EITHER with 7805 OR LM2569</text>
 <net name="FAN1" class="0">
 <segment>
 <pinref part="R6" gate="G$1" pin="1"/>
-<wire x1="-38.1" y1="-5.08" x2="-38.1" y2="-2.54" width="0.1524" layer="91"/>
 <label x="-38.1" y="-2.54" size="1.524" layer="95" rot="R90" xref="yes"/>
 <pinref part="FAN1" gate="G$1" pin="TP"/>
 <wire x1="-38.1" y1="-2.54" x2="-40.64" y2="-2.54" width="0.1524" layer="91"/>
