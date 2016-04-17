@@ -29860,7 +29860,7 @@ Various fiducial points for machine vision alignment.</description>
 <part name="RX" library="testpad" deviceset="TP" device="B1,27"/>
 <part name="R12" library="rcl" deviceset="R-EU_" device="R1206" value="10k"/>
 <part name="R13" library="rcl" deviceset="R-EU_" device="R1206" value="3k"/>
-<part name="C18" library="rcl" deviceset="C-EU" device="C1206K" value="100n"/>
+<part name="C18" library="rcl" deviceset="C-EU" device="C1206K" value="22p"/>
 <part name="GND10" library="supply1" deviceset="GND" device=""/>
 <part name="VLOAD_ATT" library="testpad" deviceset="TP" device="B1,27"/>
 <part name="LED1" library="led" deviceset="LED" device="B155"/>

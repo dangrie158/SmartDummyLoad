@@ -3281,7 +3281,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <attribute name="NAME" x="80.01" y="69.85" size="0.762" layer="25" rot="R180" align="top-center"/>
 <attribute name="VALUE" x="81.28" y="71.12" size="1.27" layer="27" rot="R180"/>
 </element>
-<element name="C18" library="rcl" package="C1206K" value="100n" x="18.415" y="43.815" smashed="yes" rot="R180">
+<element name="C18" library="rcl" package="C1206K" value="22p" x="18.415" y="43.815" smashed="yes" rot="R180">
 <attribute name="NAME" x="18.415" y="45.085" size="0.762" layer="25" rot="R180" align="top-center"/>
 <attribute name="VALUE" x="20.015" y="45.915" size="1.016" layer="27" rot="R180"/>
 </element>
