@@ -7,6 +7,7 @@
 #include "AnalogInput.h"
 #include "Button.h"
 #include "DS18B20.h"
+#include "GLCD.h"
 #include "MCP23S17.h"
 #include "MCP4921.h"
 #include "Output.h"
@@ -32,6 +33,8 @@ DS18B20 temperature1(TEMP_SENS1);
 DS18B20 temperature2(TEMP_SENS2);
 
 MCP23S17 ioExpander(CS_GPIO);
+
+GLCD lcd();
 
 int16_t last, value;
 
@@ -77,8 +80,9 @@ void loop() {
   Serial.print("I: ");
   Serial.println(loadCurrent.readConverted());
   Serial.print("U: ");
-  Serial.println(loadVoltage.readConverted());*/
-  // delay(100);
+  Serial.println(loadVoltage.readConverted());
+  delay(100);
   static uint8_t i = 0x77;
-  ioExpander.portWrite(PORT_B, i++);
+  ioExpander.portWrite(PORT_B, i++);*/
+  Serial.println("asdasdkjhlkjhlkjhlkjhl");
 }
