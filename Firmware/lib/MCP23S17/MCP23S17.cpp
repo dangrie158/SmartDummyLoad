@@ -85,7 +85,12 @@ void MCP23S17::digitalWrite(uint8_t pin, bool status) {
   wordWrite(GPIOA, mOutputCache);
 }
 bool MCP23S17::digitalRead(uint8_t pin) {
-  return digitalRead(GPIOA) & (1 << (pin)) ? HIGH : LOW;
+  uint8_t port = (pin < 8) ? GPIOA : GPIOB;
+  uint8_t portStatus = this->portRead(port);
+
+  uint8_t offset = (port == PORT_A) ? 0 : 8;
+
+  return (portStatus >> (pin - offset)) & 1;
 }
 void MCP23S17::portWrite(uint8_t port, uint8_t value) {
   if (port != PORT_A && port != PORT_B) {
@@ -101,8 +106,17 @@ uint8_t MCP23S17::portRead(uint8_t port) {
     return 0x00;
   }
 
-  uint16_t statusWord = digitalRead(GPIOA);
-  return ((uint8_t *)(&statusWord))[port];
+  uint8_t reg = (port == PORT_A) ? GPIOA : GPIOB;
+
+  ::digitalWrite(mCSPin, LOW);
+  SPI.transfer(OPCODER | (mAddress << 1));
+  SPI.transfer(reg);
+
+  uint8_t value = SPI.transfer(0x00);
+
+  ::digitalWrite(mCSPin, HIGH);
+
+  return value;
 }
 
 void MCP23S17::pinMode(uint8_t pin, uint8_t mode) {
