@@ -20,12 +20,12 @@ void NativeMapping::initializeIO() {
   pinMode(mD6Pin, OUTPUT);
   pinMode(mD7Pin, OUTPUT);
 
-  pinMode(mCs1Pin, OUTPUT); // CS1
-  pinMode(mCs2Pin, OUTPUT); // CS2
+  pinMode(mCs1Pin, OUTPUT);
+  pinMode(mCs2Pin, OUTPUT);
 
-  pinMode(mDiPin, OUTPUT); // DI
-  pinMode(mRwPin, OUTPUT); // RW
-  pinMode(mEnPin, OUTPUT); // EN
+  pinMode(mDiPin, OUTPUT);
+  pinMode(mRwPin, OUTPUT);
+  pinMode(mEnPin, OUTPUT);
 }
 
 // set all data pins as output

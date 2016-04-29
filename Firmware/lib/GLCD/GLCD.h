@@ -1,5 +1,6 @@
 #include <inttypes.h>
 
+#include "Font.h"
 #include "IOMapping.h"
 
 #ifndef GLCD_H_
@@ -20,10 +21,17 @@
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
 #define NUM_CHIPS ((SCREEN_WIDTH) / (CHIP_WIDTH))
-#define CLEAR_PATTERN 0x00
 
 #define CHIP0 0
 #define CHIP1 1
+
+#define COLOR_ON 0x01
+#define COLOR_OFF 0x00
+#define CLEAR_PATTERN 0x00
+#define FILL_PATTERN 0xFF
+
+#define NO_INVERT 0x00
+#define INVERT 0x01
 
 class GLCD {
 private:
@@ -40,6 +48,15 @@ private:
   uint8_t readData();
   void writeData(uint8_t data);
 
+  void drawPageLine(uint8_t x, uint8_t y, uint8_t width, uint8_t mask,
+                    uint8_t color, uint8_t invert);
+  void walkRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2,
+                uint8_t color = COLOR_ON, uint8_t invert = NO_INVERT);
+
+  void drawHLine(uint8_t x, uint8_t y, uint8_t width, uint8_t color = COLOR_ON);
+  void drawVLine(uint8_t x, uint8_t y, uint8_t height,
+                 uint8_t color = COLOR_ON);
+
 public:
   GLCD(IOMapping *ioMapping);
   ~GLCD();
@@ -48,7 +65,16 @@ public:
   void goTo(uint8_t x, uint8_t y);
   void fill(uint8_t pattern);
   void clearScreen();
-  void setPixel(uint8_t x, uint8_t y, uint8_t color);
+  void setPixel(uint8_t x, uint8_t y, uint8_t color = COLOR_ON);
+  void printChar(const Font &font, char c);
+  void printString(const Font &font, const char *string);
+  void printNewLine(uint8_t fontHeight, uint8_t offset);
+  void drawLine(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2,
+                uint8_t color = COLOR_ON);
+  void drawRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2,
+                uint8_t color = COLOR_ON);
+  void fillRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t color);
+  void invertRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2);
 };
 
 #endif // GLCD_H_
