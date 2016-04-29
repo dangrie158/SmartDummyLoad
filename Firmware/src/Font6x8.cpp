@@ -1,4 +1,5 @@
-#include "Font6x8.h"
+#include "Font.h"
+#include "fonts.h"
 
 /*********************************************
  *                                           *
@@ -110,4 +111,4 @@ const static uint8_t __attribute__((progmem)) fontData[] = {
     0x00, 0x3C, 0x26, 0x23, 0x26, 0x3C  //
 };
 
-Font6x8::Font6x8() : Font(fontData, 6, 8, 0x20, 0x20 + 96) {}
+Font smallFont(fontData, 6, 8, 0x20, 0x20 + 96);

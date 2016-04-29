@@ -1,4 +1,5 @@
-#include "Font12x16.h"
+#include "Font.h"
+#include "fonts.h"
 
 /*********************************************
  *                                           *
@@ -302,4 +303,4 @@ const static uint8_t __attribute__((progmem)) fontData[] = {
     0xC0, 0x0C, 0x80, 0x0F, 0x00, 0x0F, 0x00, 0x00 //
 };
 
-Font12x16::Font12x16() : Font(fontData, 12, 16, 0x20, 0x20 + 96) {}
+Font bigFont(fontData, 12, 16, 0x20, 0x20 + 96);
