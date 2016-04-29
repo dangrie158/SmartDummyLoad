@@ -5,17 +5,14 @@
 #ifndef GLCD_H_
 #define GLCD_H_
 
-#define DISPLAY_SET_Y 0x40
-#define DISPLAY_SET_X 0xB8
 #define DISPLAY_START_LINE 0xC0
-#define DISPLAY_ON_CMD 0x3E
 #define DISPLAY_STATUS_BUSY 0x80
-#define CHIP_WIDTH 64
-#define CHIP_HEIGHT 64
-#define ON 0x01
-#define OFF 0x00
 #define LCD_SET_ADD 0x40
 #define LCD_SET_PAGE 0xB8
+
+#define CHIP_WIDTH 64
+#define CHIP_HEIGHT 64
+#define PAGE_SIZE 8
 
 #define LCD_ON 0x3F
 #define LCD_DISP_START 0xC0
