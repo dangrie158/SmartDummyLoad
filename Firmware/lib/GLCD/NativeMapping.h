@@ -6,8 +6,25 @@
 
 class NativeMapping : public IOMapping {
 private:
+  uint8_t mCs1Pin;
+  uint8_t mCs2Pin;
+  uint8_t mEnPin;
+  uint8_t mRwPin;
+  uint8_t mDiPin;
+  uint8_t mD0Pin;
+  uint8_t mD1Pin;
+  uint8_t mD2Pin;
+  uint8_t mD3Pin;
+  uint8_t mD4Pin;
+  uint8_t mD5Pin;
+  uint8_t mD6Pin;
+  uint8_t mD7Pin;
+
 public:
-  NativeMapping();
+  NativeMapping(uint8_t cs1Pin, uint8_t cs2Pin, uint8_t enPin, uint8_t rwPin,
+                uint8_t diPin, uint8_t d0Pin, uint8_t d1Pin, uint8_t d2Pin,
+                uint8_t d3Pin, uint8_t d4Pin, uint8_t d5Pin, uint8_t d6Pin,
+                uint8_t d7Pin);
 
   void initializeIO();
 

@@ -1,93 +1,100 @@
 #include "NativeMapping.h"
 #include "Arduino.h"
 
-NativeMapping::NativeMapping() {}
+NativeMapping::NativeMapping(uint8_t cs1Pin, uint8_t cs2Pin, uint8_t enPin,
+                             uint8_t rwPin, uint8_t diPin, uint8_t d0Pin,
+                             uint8_t d1Pin, uint8_t d2Pin, uint8_t d3Pin,
+                             uint8_t d4Pin, uint8_t d5Pin, uint8_t d6Pin,
+                             uint8_t d7Pin)
+    : mCs1Pin(cs1Pin), mCs2Pin(cs2Pin), mEnPin(enPin), mRwPin(rwPin),
+      mDiPin(diPin), mD0Pin(d0Pin), mD1Pin(d1Pin), mD2Pin(d2Pin), mD3Pin(d3Pin),
+      mD4Pin(d4Pin), mD5Pin(d5Pin), mD6Pin(d6Pin), mD7Pin(d7Pin) {}
 
 void NativeMapping::initializeIO() {
-  pinMode(2, OUTPUT); // D1
-  pinMode(3, OUTPUT); // D2
-  pinMode(4, OUTPUT); // D3
-  pinMode(5, OUTPUT); // D4
-  pinMode(6, OUTPUT); // D5
-  pinMode(7, OUTPUT); // D6
-  pinMode(8, OUTPUT); // D7
-  pinMode(9, OUTPUT); // D8
+  pinMode(mD0Pin, OUTPUT);
+  pinMode(mD1Pin, OUTPUT);
+  pinMode(mD2Pin, OUTPUT);
+  pinMode(mD3Pin, OUTPUT);
+  pinMode(mD4Pin, OUTPUT);
+  pinMode(mD5Pin, OUTPUT);
+  pinMode(mD6Pin, OUTPUT);
+  pinMode(mD7Pin, OUTPUT);
 
-  pinMode(10, OUTPUT); // CS1
-  pinMode(11, OUTPUT); // CS2
+  pinMode(mCs1Pin, OUTPUT); // CS1
+  pinMode(mCs2Pin, OUTPUT); // CS2
 
-  pinMode(A0, OUTPUT); // DI
-  pinMode(A1, OUTPUT); // RW
-  pinMode(A2, OUTPUT); // EN
+  pinMode(mDiPin, OUTPUT); // DI
+  pinMode(mRwPin, OUTPUT); // RW
+  pinMode(mEnPin, OUTPUT); // EN
 }
 
 // set all data pins as output
 void NativeMapping::prepareDataOutput() {
-  pinMode(2, OUTPUT); // D1
-  pinMode(3, OUTPUT); // D2
-  pinMode(4, OUTPUT); // D3
-  pinMode(5, OUTPUT); // D4
-  pinMode(6, OUTPUT); // D5
-  pinMode(7, OUTPUT); // D6
-  pinMode(8, OUTPUT); // D7
-  pinMode(9, OUTPUT); // D8
+  pinMode(mD0Pin, OUTPUT);
+  pinMode(mD1Pin, OUTPUT);
+  pinMode(mD2Pin, OUTPUT);
+  pinMode(mD3Pin, OUTPUT);
+  pinMode(mD4Pin, OUTPUT);
+  pinMode(mD5Pin, OUTPUT);
+  pinMode(mD6Pin, OUTPUT);
+  pinMode(mD7Pin, OUTPUT);
 }
 void NativeMapping::prepareDataInput() {
-  pinMode(2, INPUT); // D1
-  pinMode(3, INPUT); // D2
-  pinMode(4, INPUT); // D3
-  pinMode(5, INPUT); // D4
-  pinMode(6, INPUT); // D5
-  pinMode(7, INPUT); // D6
-  pinMode(8, INPUT); // D7
-  pinMode(9, INPUT); // D8
+  pinMode(mD0Pin, INPUT);
+  pinMode(mD1Pin, INPUT);
+  pinMode(mD2Pin, INPUT);
+  pinMode(mD3Pin, INPUT);
+  pinMode(mD4Pin, INPUT);
+  pinMode(mD5Pin, INPUT);
+  pinMode(mD6Pin, INPUT);
+  pinMode(mD7Pin, INPUT);
 }
 void NativeMapping::writeData(uint8_t data) {
-  digitalWrite(2, (data >> 0) & 1); // D1
-  digitalWrite(3, (data >> 1) & 1); // D2
-  digitalWrite(4, (data >> 2) & 1); // D3
-  digitalWrite(5, (data >> 3) & 1); // D4
-  digitalWrite(6, (data >> 4) & 1); // D5
-  digitalWrite(7, (data >> 5) & 1); // D6
-  digitalWrite(8, (data >> 6) & 1); // D7
-  digitalWrite(9, (data >> 7) & 1); // D8
+  digitalWrite(mD0Pin, (data >> 0) & 1);
+  digitalWrite(mD1Pin, (data >> 1) & 1);
+  digitalWrite(mD2Pin, (data >> 2) & 1);
+  digitalWrite(mD3Pin, (data >> 3) & 1);
+  digitalWrite(mD4Pin, (data >> 4) & 1);
+  digitalWrite(mD5Pin, (data >> 5) & 1);
+  digitalWrite(mD6Pin, (data >> 6) & 1);
+  digitalWrite(mD7Pin, (data >> 7) & 1);
 }
 uint8_t NativeMapping::readData() {
   uint8_t data = 0;
-  data |= (digitalRead(2) << 0);
-  data |= (digitalRead(3) << 1);
-  data |= (digitalRead(4) << 2);
-  data |= (digitalRead(5) << 3);
-  data |= (digitalRead(6) << 4);
-  data |= (digitalRead(7) << 5);
-  data |= (digitalRead(8) << 6);
-  data |= (digitalRead(9) << 7);
+  data |= (digitalRead(mD0Pin) << 0);
+  data |= (digitalRead(mD1Pin) << 1);
+  data |= (digitalRead(mD2Pin) << 2);
+  data |= (digitalRead(mD3Pin) << 3);
+  data |= (digitalRead(mD4Pin) << 4);
+  data |= (digitalRead(mD5Pin) << 5);
+  data |= (digitalRead(mD6Pin) << 6);
+  data |= (digitalRead(mD7Pin) << 7);
   return data;
 }
 
-void NativeMapping::setRwPin() { digitalWrite(A1, HIGH); }
-void NativeMapping::clearRwPin() { digitalWrite(A1, LOW); }
-void NativeMapping::setDiPin() { digitalWrite(A0, HIGH); }
-void NativeMapping::clearDiPin() { digitalWrite(A0, LOW); }
-void NativeMapping::setEnPin() { digitalWrite(A2, HIGH); }
-void NativeMapping::clearEnPin() { digitalWrite(A2, LOW); }
+void NativeMapping::setRwPin() { digitalWrite(mRwPin, HIGH); }
+void NativeMapping::clearRwPin() { digitalWrite(mRwPin, LOW); }
+void NativeMapping::setDiPin() { digitalWrite(mDiPin, HIGH); }
+void NativeMapping::clearDiPin() { digitalWrite(mDiPin, LOW); }
+void NativeMapping::setEnPin() { digitalWrite(mEnPin, HIGH); }
+void NativeMapping::clearEnPin() { digitalWrite(mEnPin, LOW); }
 void NativeMapping::setCsPin(uint8_t controller) {
   switch (controller) {
   case 0:
-    digitalWrite(10, HIGH);
+    digitalWrite(mCs1Pin, HIGH);
     break;
   case 1:
-    digitalWrite(11, HIGH);
+    digitalWrite(mCs2Pin, HIGH);
     break;
   }
 }
 void NativeMapping::clearCsPin(uint8_t controller) {
   switch (controller) {
   case 0:
-    digitalWrite(10, LOW);
+    digitalWrite(mCs1Pin, LOW);
     break;
   case 1:
-    digitalWrite(11, LOW);
+    digitalWrite(mCs2Pin, LOW);
     break;
   }
 }
