@@ -1,5 +1,6 @@
 #include <inttypes.h>
 
+#include "Bitmap.h"
 #include "Font.h"
 #include "IOMapping.h"
 
@@ -75,6 +76,7 @@ public:
                 uint8_t color = COLOR_ON);
   void fillRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t color);
   void invertRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2);
+  void drawBitmap(const Bitmap &bitmap, uint8_t x, uint8_t y);
 };
 
 #endif // GLCD_H_

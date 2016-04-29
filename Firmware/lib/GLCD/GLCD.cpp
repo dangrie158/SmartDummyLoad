@@ -214,6 +214,7 @@ void GLCD::printString(const Font &font, const char *string) {
     string++;
   }
 }
+
 void GLCD::drawLine(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2,
                     uint8_t color) {
   uint8_t width = ABS_DIFF(x1, x2);
@@ -354,4 +355,13 @@ void GLCD::fillRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2,
 
 void GLCD::invertRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2) {
   this->walkRect(x1, y1, x2, y2, COLOR_OFF, INVERT);
+}
+
+void GLCD::drawBitmap(const Bitmap &bitmap, uint8_t x, uint8_t y) {
+  for (uint8_t j = 0; j < (bitmap.getHeight() / PAGE_SIZE); j++) {
+    this->goTo(x, y + (j * PAGE_SIZE));
+    for (uint8_t i = 0; i < bitmap.getWidth(); i++) {
+      this->writeData(bitmap.getPageBlock(i, j));
+    }
+  }
 }
