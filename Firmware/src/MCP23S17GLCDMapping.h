@@ -17,6 +17,8 @@ class MCP23S17GLCDMapping : public IOMapping {
 private:
   MCP23S17 *mIoDevice;
 
+  uint8_t mControlPortStatus;
+
 public:
   MCP23S17GLCDMapping(MCP23S17 *ioDevice);
 
