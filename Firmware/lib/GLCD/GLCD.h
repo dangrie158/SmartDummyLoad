@@ -47,7 +47,6 @@ private:
   void writeCommand(uint8_t command, uint8_t controller);
   uint8_t readStatus(uint8_t controller);
   uint8_t readData();
-  void writeData(uint8_t data);
 
   void drawPageLine(uint8_t x, uint8_t y, uint8_t width, uint8_t mask,
                     uint8_t color, uint8_t invert);
@@ -64,6 +63,7 @@ public:
 
   void initialize();
   void goTo(uint8_t x, uint8_t y);
+  void writeData(uint8_t data);
   void fill(uint8_t pattern);
   void clearScreen();
   void setPixel(uint8_t x, uint8_t y, uint8_t color = COLOR_ON);

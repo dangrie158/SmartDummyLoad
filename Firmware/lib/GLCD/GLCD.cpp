@@ -90,31 +90,35 @@ void GLCD::writeData(uint8_t data) {
 
   uint8_t yOffset = this->mPosY % PAGE_SIZE;
   if (yOffset != 0) {
-    uint8_t tempData, tempX, tempY;
+    uint8_t tempData, originalX, originalY, tempY;
     // we're witing over a page boundary,
     // we need to read 2 positions and merge the
     // new data
-    tempX = mPosX;
-    tempY = mPosY;
-    this->goTo(tempX, tempY);
-    tempData = this->readData(); // dummy read
-    this->goTo(tempX, tempY);
+    tempY = mPosY - yOffset;
+    originalX = mPosX;
+    originalY = mPosY;
+
+    // this->goTo(originalX, tempY);
+    // tempData = this->readData(); // dummy read
+    this->goTo(originalX, tempY);
     tempData = this->readData(); // "real" read
 
     tempData |= data << yOffset;
-    this->goTo(tempX, tempY);
+    this->goTo(originalX, tempY);
     this->writeData(tempData);
 
     // second page
     tempY += PAGE_SIZE;
-    this->goTo(tempX, tempY);
-    tempData = this->readData(); // dummy read
-    this->goTo(tempX, tempY);
+    // this->goTo(originalX, tempY);
+    // tempData = this->readData(); // dummy read
+    this->goTo(originalX, tempY);
     tempData = this->readData(); // "real" read
-    this->goTo(tempX, tempY);
+    this->goTo(originalX, tempY);
 
     tempData |= data >> (PAGE_SIZE - yOffset);
     this->writeData(tempData);
+
+    this->goTo(originalX, originalY);
   } else {
     mIo->prepareDataOutput();
     mIo->clearRwPin();
