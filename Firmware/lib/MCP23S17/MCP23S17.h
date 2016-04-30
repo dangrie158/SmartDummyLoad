@@ -20,8 +20,6 @@ private:
   uint16_t mOutputCache;
 
   void byteWrite(uint8_t reg, uint8_t value);
-  void wordWrite(uint8_t reg, uint16_t word);
-  uint16_t wordRead(uint8_t reg);
 
 public:
   MCP23S17(uint8_t csPin, uint8_t address = 0x00);

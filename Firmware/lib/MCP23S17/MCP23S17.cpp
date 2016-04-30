@@ -40,41 +40,6 @@ void MCP23S17::byteWrite(uint8_t reg, uint8_t value) {
   ::digitalWrite(mCSPin, HIGH);
 }
 
-// GENERIC WORD WRITE - will write a word to a register pair, LSB to first
-// register, MSB to next higher value register
-
-void MCP23S17::wordWrite(uint8_t reg, uint16_t word) {
-  ::digitalWrite(mCSPin, LOW);
-
-  // Send the MCP23S17 opcode, chip address, and write bit
-  SPI.transfer(OPCODEW | (mAddress << 1));
-  // Send the register we want to write
-  SPI.transfer(reg);
-  // Send the low byte
-  SPI.transfer((uint8_t)(word));
-  // Send the high byte
-  SPI.transfer((uint8_t)(word >> 8));
-  // Take slave-select high
-  ::digitalWrite(mCSPin, HIGH);
-}
-
-uint16_t MCP23S17::wordRead(uint8_t reg) {
-  uint16_t value = 0;
-  // Take slave-select low
-  ::digitalWrite(mCSPin, LOW);
-  // Send the MCP23S17 opcode, chip address, and read bit
-  SPI.transfer(OPCODER | (mAddress << 1));
-  // Send the register we want to read
-  SPI.transfer(reg);
-  // send empty bytes to clock in the data from the chip
-  value = SPI.transfer(0x00);
-  value |= (SPI.transfer(0x00) << 8);
-  // Take slave-select high
-  ::digitalWrite(mCSPin, HIGH);
-  // Return the constructed word, the format is 0x(portB)(portA)
-  return value;
-}
-
 void MCP23S17::digitalWrite(uint8_t pin, bool status) {
   if (status == HIGH) {
     mOutputCache |= (1 << pin);
@@ -82,7 +47,10 @@ void MCP23S17::digitalWrite(uint8_t pin, bool status) {
     mOutputCache &= ~(1 << pin);
   }
 
-  wordWrite(GPIOA, mOutputCache);
+  uint8_t reg = pin < 8 ? GPIOA : GPIOB;
+  uint8_t port = pin < 8 ? PORT_A : PORT_B;
+
+  byteWrite(reg, ((uint8_t *)(&mOutputCache))[port]);
 }
 bool MCP23S17::digitalRead(uint8_t pin) {
   uint8_t port = (pin < 8) ? GPIOA : GPIOB;
@@ -98,8 +66,8 @@ void MCP23S17::portWrite(uint8_t port, uint8_t value) {
   }
 
   ((uint8_t *)(&mOutputCache))[port] = value;
-
-  wordWrite(GPIOA, mOutputCache);
+  uint8_t reg = (port == PORT_A) ? GPIOA : GPIOB;
+  byteWrite(reg, value);
 }
 uint8_t MCP23S17::portRead(uint8_t port) {
   if (port != PORT_A && port != PORT_B) {
@@ -130,9 +98,15 @@ void MCP23S17::pinMode(uint8_t pin, uint8_t mode) {
     mModeCache &= ~(1 << pin);
     mPullupCache |= (1 << pin);
   }
-  wordWrite(IODIRA, mModeCache);
-  wordWrite(GPPUA, mPullupCache);
+
+  uint8_t dirReg = pin < 8 ? IODIRA : IODIRB;
+  uint8_t pullupReg = pin < 8 ? GPPUA : GPPUB;
+  uint8_t port = pin < 8 ? PORT_A : PORT_B;
+
+  byteWrite(dirReg, ((uint8_t *)(&mModeCache))[port]);
+  byteWrite(pullupReg, ((uint8_t *)(&mPullupCache))[port]);
 }
+
 void MCP23S17::portMode(uint8_t port, uint8_t mode) {
   if (port != PORT_A && port != PORT_B) {
     return;
@@ -151,6 +125,8 @@ void MCP23S17::portMode(uint8_t port, uint8_t mode) {
   ((uint8_t *)(&mModeCache))[port] = portModeValue;
   ((uint8_t *)(&mPullupCache))[port] = portPullupValue;
 
-  wordWrite(IODIRA, mModeCache);
-  wordWrite(GPPUA, mPullupCache);
+  uint8_t modeReg = (port == PORT_A) ? IODIRA : IODIRB;
+  uint8_t pullupReg = (port == PORT_A) ? GPPUA : GPPUB;
+  byteWrite(modeReg, portModeValue);
+  byteWrite(pullupReg, portPullupValue);
 }
