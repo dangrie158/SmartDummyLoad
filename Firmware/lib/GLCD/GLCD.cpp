@@ -18,7 +18,8 @@ GLCD::~GLCD() {}
 
 void GLCD::initialize() {
   mIo->initializeIO();
-  this->disableAllController();
+  this->disableController(0);
+  this->disableController(1);
 
   for (uint8_t i = 0; i < NUM_CHIPS; i++) {
     this->writeCommand((LCD_ON), i);
@@ -30,9 +31,8 @@ void GLCD::initialize() {
 
 void GLCD::delay() {}
 void GLCD::enableController(uint8_t controller) { mIo->setCsPin(controller); }
-void GLCD::disableAllController() {
-  mIo->clearCsPin(0);
-  mIo->clearCsPin(1);
+void GLCD::disableController(uint8_t controller) {
+  mIo->clearCsPin(controller);
 }
 
 uint8_t GLCD::readStatus(uint8_t controller) {
@@ -46,14 +46,14 @@ uint8_t GLCD::readStatus(uint8_t controller) {
   this->delay();
   status = mIo->readData();
   mIo->clearEnPin();
-  this->disableAllController();
+  this->disableController(controller);
 
   return status;
 }
 
 void GLCD::writeCommand(uint8_t command, uint8_t controller) {
-  while (this->readStatus(controller) & DISPLAY_STATUS_BUSY)
-    ;
+  // while (this->readStatus(controller) & DISPLAY_STATUS_BUSY)
+  ;
   mIo->prepareDataOutput();
   mIo->clearRwPin();
   mIo->clearDiPin();
@@ -62,13 +62,13 @@ void GLCD::writeCommand(uint8_t command, uint8_t controller) {
   mIo->setEnPin();
   this->delay();
   mIo->clearEnPin();
-  this->disableAllController();
+  this->disableController(controller);
 }
 
 uint8_t GLCD::readData() {
   unsigned char data;
-  while (this->readStatus(this->mPosX / CHIP_WIDTH) & DISPLAY_STATUS_BUSY)
-    ;
+  // while (this->readStatus(this->mPosX / CHIP_WIDTH) & DISPLAY_STATUS_BUSY)
+  ;
   mIo->prepareDataInput();
   mIo->setRwPin();
   mIo->setDiPin();
@@ -77,7 +77,7 @@ uint8_t GLCD::readData() {
   this->delay();
   data = mIo->readData();
   mIo->clearEnPin();
-  this->disableAllController();
+  this->disableController(this->mPosX / CHIP_WIDTH);
 
   this->mPosX++;
 
@@ -85,8 +85,8 @@ uint8_t GLCD::readData() {
 }
 
 void GLCD::writeData(uint8_t data) {
-  while (this->readStatus(this->mPosX / CHIP_WIDTH) & DISPLAY_STATUS_BUSY)
-    ;
+  // while (this->readStatus(this->mPosX / CHIP_WIDTH) & DISPLAY_STATUS_BUSY)
+  ;
 
   uint8_t yOffset = this->mPosY % PAGE_SIZE;
   if (yOffset != 0) {
@@ -124,7 +124,7 @@ void GLCD::writeData(uint8_t data) {
     mIo->setEnPin();
     this->delay();
     mIo->clearEnPin();
-    this->disableAllController();
+    this->disableController(this->mPosX / CHIP_WIDTH);
   }
 
   this->mPosX++;

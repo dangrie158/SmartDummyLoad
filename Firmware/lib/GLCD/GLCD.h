@@ -42,7 +42,7 @@ private:
 
   void delay();
   void enableController(uint8_t controller);
-  void disableAllController();
+  void disableController(uint8_t controller);
 
   void writeCommand(uint8_t command, uint8_t controller);
   uint8_t readStatus(uint8_t controller);
@@ -74,7 +74,8 @@ public:
                 uint8_t color = COLOR_ON);
   void drawRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2,
                 uint8_t color = COLOR_ON);
-  void fillRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t color);
+  void fillRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2,
+                uint8_t color = COLOR_ON);
   void invertRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2);
   void drawBitmap(const Bitmap &bitmap, uint8_t x, uint8_t y);
 };
