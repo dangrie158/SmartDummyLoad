@@ -98,23 +98,25 @@ void GLCD::writeData(uint8_t data) {
     originalX = mPosX;
     originalY = mPosY;
 
-    // this->goTo(originalX, tempY);
-    // tempData = this->readData(); // dummy read
+    this->goTo(originalX, tempY);
+    tempData = this->readData(); // dummy read
     this->goTo(originalX, tempY);
     tempData = this->readData(); // "real" read
 
+    tempData &= ~(0xff << yOffset);
     tempData |= data << yOffset;
     this->goTo(originalX, tempY);
     this->writeData(tempData);
 
     // second page
     tempY += PAGE_SIZE;
-    // this->goTo(originalX, tempY);
-    // tempData = this->readData(); // dummy read
+    this->goTo(originalX, tempY);
+    tempData = this->readData(); // dummy read
     this->goTo(originalX, tempY);
     tempData = this->readData(); // "real" read
     this->goTo(originalX, tempY);
 
+    tempData &= ~(0xff >> (PAGE_SIZE - yOffset));
     tempData |= data >> (PAGE_SIZE - yOffset);
     this->writeData(tempData);
 
