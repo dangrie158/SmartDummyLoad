@@ -4,8 +4,10 @@
 #include "GLCD.h"
 #include <inttypes.h>
 
-#define PROGRESSBAR_HEIGHT 8
 #define PROGRESSBAR_BORDER 2
+#define BORDER_PATTERN 0xFF
+#define EMPTY_PATTERN 0x81
+#define FULL_PATTERN 0xBD
 
 class ProgressBar {
 private:

@@ -1,39 +1,41 @@
 #include "ProgressBar.h"
+#include "Arduino.h"
 
 ProgressBar::ProgressBar(GLCD *glcd, uint8_t x, uint8_t y, uint8_t width)
     : mGlcd(glcd), mXPos(x), mYPos(y), mWidth(width), mValue(0) {}
 
 void ProgressBar::draw() {
-  uint8_t fillWidth =
-      ((int)(mWidth - (2 * PROGRESSBAR_BORDER)) * 100) / this->mValue;
+  mGlcd->goTo(mXPos, mYPos);
+  mGlcd->writeData(BORDER_PATTERN);
+  mGlcd->writeData(EMPTY_PATTERN);
 
-  mGlcd->drawLine(mXPos, mYPos, mXPos + mWidth, mYPos);
-  mGlcd->drawLine(mXPos, mYPos, mXPos, mYPos + PROGRESSBAR_HEIGHT);
-  mGlcd->drawLine(mXPos, mYPos + PROGRESSBAR_HEIGHT, mXPos + mWidth,
-                  mYPos + PROGRESSBAR_HEIGHT);
-  mGlcd->drawLine(mXPos + mWidth, mYPos, mXPos + mWidth,
-                  mYPos + PROGRESSBAR_HEIGHT);
+  for (uint8_t i = 0; i < mWidth; i++) {
+    mGlcd->writeData(EMPTY_PATTERN);
+  }
 
-  mGlcd->fillRect(mXPos + PROGRESSBAR_BORDER, mYPos + PROGRESSBAR_BORDER,
-                  mXPos + fillWidth,
-                  mYPos + PROGRESSBAR_HEIGHT - PROGRESSBAR_BORDER);
+  mGlcd->writeData(EMPTY_PATTERN);
+  mGlcd->writeData(BORDER_PATTERN);
 }
 
 void ProgressBar::setValue(uint8_t value) {
-  uint8_t oldFillWidth =
-      ((int)(mWidth - (2 * PROGRESSBAR_BORDER)) * 100) / this->mValue;
+  if (value > 100) {
+    return;
+  }
+  uint8_t oldFillWidth = ((int32_t)(mWidth) * this->mValue) / 100;
 
-  uint8_t fillWidth = ((int)(mWidth - (2 * PROGRESSBAR_BORDER)) * 100) / value;
+  uint8_t fillWidth = ((int32_t)(mWidth)*value) / 100;
 
   this->mValue = value;
 
   if (oldFillWidth > fillWidth) {
-    // mGlcd->fillRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2,
-    // COLOR_OFF);
+    mGlcd->goTo(fillWidth + mXPos + PROGRESSBAR_BORDER, mYPos);
+    for (uint8_t i = 0; i < (oldFillWidth - fillWidth); i++) {
+      mGlcd->writeData(EMPTY_PATTERN);
+    }
   } else {
-    // mGlcd->fillRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2,
-    // COLOR_ON);
+    mGlcd->goTo(oldFillWidth + mXPos + PROGRESSBAR_BORDER, mYPos);
+    for (uint8_t i = 0; i < (fillWidth - oldFillWidth); i++) {
+      mGlcd->writeData(FULL_PATTERN);
+    }
   }
-
-  this->draw();
 }
