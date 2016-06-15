@@ -7,8 +7,8 @@
 
 #define DATA_PORT PORT_B
 #define CTRL_PORT PORT_A
-#define CS1_PIN 1
-#define CS2_PIN 0
+#define CS1_PIN 0
+#define CS2_PIN 1
 #define RW_PIN 3
 #define DI_PIN 4
 #define EN_PIN 2
