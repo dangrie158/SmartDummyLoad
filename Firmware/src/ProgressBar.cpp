@@ -19,7 +19,7 @@ void ProgressBar::draw() {
 
 void ProgressBar::setValue(uint8_t value) {
   if (value > 100) {
-    return;
+    value = 100;
   }
   uint8_t oldFillWidth = ((int32_t)(mWidth) * this->mValue) / 100;
 
