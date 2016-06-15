@@ -9,6 +9,10 @@
 # comment the following line if you want to have your project file included.
 eagle.epf
 
+#AutoCAD Files
+*.dxf
+*.bak
+
 # CAM files
 *.$$$
 *.cmp
