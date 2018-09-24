@@ -50,15 +50,25 @@ uint16_t currentDacValue;
 uint16_t currentSetLoad;
 bool outputState = OFF;
 bool coarseEncoder = true;
+bool emergencyShutdownEnabled = false;
+uint16_t cutoffTemperature = 600;
+volatile uint16_t serialUpdateInterval = 100;
+volatile bool sendSerialUpdate;
 
 void timerIsr() {
+  static uint16_t millisecondsPast;
   encoder.service();
   outputEnableButton.update();
   button2.update();
+  millisecondsPast++;
+  if (serialUpdateInterval != 0 && serialUpdateInterval == millisecondsPast) {
+    millisecondsPast = 0;
+    sendSerialUpdate = true;
+  }
 }
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(BAUD_RATE);
   dac.setConfiguration(true, false, false);
   fan1.switchOff();
   fan2.switchOff();
@@ -83,6 +93,54 @@ void loop() {
   display();
 
   handleHID();
+
+  handleSerial();
+}
+
+void handleSerial() {
+  if (sendSerialUpdate) {
+    sendSerialUpdate = false;
+    sendFloatValue(VOLTAGE_TOKEN, loadVoltage.readConverted());
+    sendIntValue(CURRENT_MEASURED_TOKEN, (loadCurrent.readConverted() * 1000));
+    sendIntValue(CURRENT_SET_TOKEN, currentSetLoad);
+    sendFloatValue(TEMP1_TOKEN, temperature1.getTemperature());
+    sendFloatValue(TEMP2_TOKEN, temperature2.getTemperature());
+    sendIntValue(FAN_STATUS_TOKEN, (int)fan1.getStatus());
+    sendIntValue(EMERGENCY_STATUS_TOKEN, (int)emergencyShutdownEnabled);
+    sendIntValue(OUTPUT_STATUS_TOKEN, (int)outputState);
+  }
+
+  if (Serial.available()) {
+    char key[20];
+    char value[20];
+
+    Serial.readBytesUntil(TOKEN_SEPERATOR, key, 19);
+    Serial.readBytesUntil('\n', value, 19);
+
+    if (strncmp(key, SET_INTERVALL_TOKEN, 19) == 0) {
+      serialUpdateInterval = atoi(value);
+    } else if (strncmp(key, SET_CUTOFF_TOKEN, 19) == 0) {
+      cutoffTemperature = atoi(value);
+    } else if (strncmp(key, CURRENT_SET_TOKEN, 19) == 0) {
+      setCurrent(atoi(value));
+    } else if (strncmp(key, ENABLE_TOKEN, 19) == 0) {
+      updateOutputState(true);
+    } else if (strncmp(key, DISABLE_TOKEN, 19) == 0) {
+      updateOutputState(false);
+    }
+  }
+}
+
+void sendFloatValue(const char *key, float value) {
+  Serial.print(key);
+  Serial.print(TOKEN_SEPERATOR);
+  Serial.println(value);
+}
+
+void sendIntValue(const char *key, int value) {
+  Serial.print(key);
+  Serial.print(TOKEN_SEPERATOR);
+  Serial.println(value);
 }
 
 void setCurrent(uint16_t milliAmp) {
@@ -104,6 +162,7 @@ void setCurrent(uint16_t milliAmp) {
 void updateOutputState(bool newState) {
   outputState = newState;
   if (newState == true) {
+    emergencyShutdownEnabled = false;
     thermalShutdownIndicator.switchOff();
     dac.setValue(currentDacValue);
     loadEnabledIndicator.switchOn();
@@ -117,6 +176,7 @@ void emergencyShutdown() {
   updateOutputState(OFF);
   Serial.println("EMERGENCY_OFF");
   thermalShutdownIndicator.switchOn();
+  emergencyShutdownEnabled = true;
 }
 
 void display() {
@@ -186,7 +246,8 @@ void handleTemperature() {
   }
 
   // safety switch off the MosFETs when they get over 60°
-  if (temp1 > 60 || temp2 > 60) {
+  if (((uint16_t)(temp1)*10) > cutoffTemperature ||
+      ((uint16_t)(temp2)*10) > cutoffTemperature) {
     emergencyShutdown();
   }
 }
